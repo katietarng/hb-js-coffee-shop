@@ -50,30 +50,53 @@
     var myRevenueMessage = document.getElementById("revenue");
     var myImage = document.getElementById("coffee-image");
 
+    var drinksOrdered = []
+
     myImage.setAttribute("src", "static/coffee_beans.jpg");
 
-    function makeCoffee() {
+    myImage.addEventListener("click", function () { return makeCoffee("brew"); 
+    });
 
+    function makeCoffee(drinkType) {
         myImage.setAttribute("src", "static/coffee_machine.jpg");
-        // myImage.setAttribute("src", "static/coffee_mug.jpg");
+
+        setTimeout( function () {
+            myImage.setAttribute("src", "static/coffee_mug.jpg");
+        }, 1000)
         
-        setTimeout(myImage.setAttribute("src", "static/coffee_beans.jpg"), 500);
+        setTimeout( function () {
+            myImage.setAttribute("src", "static/coffee_beans.jpg")
+        }, 2500);
+
+        drinksOrdered.push(drinkType)
+
+        myRevenueMessage.innerHTML = totalRevenue()
     }
 
-    myImage.addEventListener("click", makeCoffee);
+    var espresso = document.getElementById("espresso");
+    var latte = document.getElementById("latte");
+    var hotChocolate = document.getElementById("hot-chocolate");
 
+    espresso.addEventListener("click", function () { return makeCoffee("espresso");});
+    latte.addEventListener("click", function () { return makeCoffee("latte")});
+    hotChocolate.addEventListener("click", function () { return makeCoffee("hot chocolate");});
 
-
-
-    // use this JavaScript object in further study step
-
-    var prices = {
+    var PRICES = {
         "brew": 2.05,
         "espresso": 3.25,
         "latte": 4.15,
         "hot chocolate": 2.50
     };
 
+    function totalRevenue() {
+        var revenue = 0 
+
+        for (var i = 0; i < drinksOrdered.length; i++) {
+            revenue = revenue + PRICES[drinksOrdered[i]];
+        }
+
+        return revenue 
+    }
 
 </script>
 
